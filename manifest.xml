@@ -1,0 +1,35 @@
+<?xml version='1.0'?>
+<module>
+	<exporttime>2015-10-22 13:04:21</exporttime>
+	<name>MSDuplicateCheck</name>
+	<label>MSDuplicateCheck</label>
+	<parent></parent>
+	<type>extension</type>
+	<version>2.0</version>
+	<dependencies>
+		<vtiger_version>6.0.0</vtiger_version>
+		<vtiger_max_version>6.*</vtiger_max_version>
+	</dependencies>
+	<tables>
+	</tables>
+	<events>
+	</events>
+	<customlinks>
+		<customlink>
+			<linktype>HEADERSCRIPT</linktype>
+			<linklabel>MSDUPLICATECHECKHEADERSCRIPT</linklabel>
+			<linkurl><![CDATA[modules/MSDuplicateCheck/MSDuplicateCheck.js]]></linkurl>
+			<linkicon><![CDATA[]]>
+			</linkicon>
+			<sequence>1</sequence>
+			<handler_path><![CDATA[]]>
+			</handler_path>
+			<handler_class><![CDATA[]]>
+			</handler_class>
+			<handler><![CDATA[]]>
+			</handler>
+		</customlink>
+	</customlinks>
+	<crons>
+	</crons>
+</module>
