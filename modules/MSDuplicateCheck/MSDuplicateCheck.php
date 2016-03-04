@@ -5,7 +5,7 @@ include_once 'modules/Vtiger/CRMEntity.php';
 class MSDuplicateCheck extends Vtiger_CRMEntity {
 
     /**
-     * Invoked when special actions are performed on the module.
+     * Check if module is being installed or updated
      *
      * @param   String Module name
      * @param   String Event Type
@@ -31,6 +31,9 @@ class MSDuplicateCheck extends Vtiger_CRMEntity {
         }
     }
     
+    /**
+     * Check schema of table after update
+     */
     private static function checkSchema(){
         global $adb;
         $result = $adb->pquery("show columns from ms_duplicatecheck like ?", array('save_blocker_status'));
