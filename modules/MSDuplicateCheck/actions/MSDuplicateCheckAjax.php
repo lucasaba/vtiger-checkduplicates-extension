@@ -84,7 +84,7 @@ class MSDuplicateCheck_MSDuplicateCheckAjax_Action extends Vtiger_Action_Control
         }
 
         // prepare response array
-        $return = array("status" => "200", "content" => array("duplicate_ids" => $return));
+        $return = array("status" => "200", "content" => array("duplicate_ids" => $return), "msg" => vtranslate('JS_MSDUPLICATE_FOUND', 'MSDuplicateCheck'));
         $response = new Vtiger_Response();
         $response->setResult($return);
         $response->emit();

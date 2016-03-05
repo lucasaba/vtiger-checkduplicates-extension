@@ -21,8 +21,9 @@
 	    			if(data.result.content.duplicate_ids.length > 0){
 	    				// check if more than one ID or if the record is itself
 	    				if(data.result.content.duplicate_ids.length > 1 || jQuery.inArray(app.getRecordId(), data.result.content.duplicate_ids)==-1){
+                            var msg = data.result.msg;
 	    					// append error div
-	    					el.after("<div class='ms_duplicate_error' style='color:red;'>Duplicate content found!</div>");
+	    					el.after("<div class='ms_duplicate_error' style='color:red;'>"+msg+"</div>");
 	    					// if this should prevent saving the record, set disabled on save button
 	    					if(saveBlockerStatus==1){
 	    						jQuery("[type='submit']").attr("disabled", true);
