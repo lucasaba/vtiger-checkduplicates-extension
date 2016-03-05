@@ -60,22 +60,24 @@ class MSDuplicateCheck_MSDuplicateCheckAjax_Action extends Vtiger_Action_Control
         $number = $this->db->num_rows($result);
         $return = array();
         if($number > 0){
-            $row = $this->db->query_result_rowdata($result, 0);
-            // check for duplicate values 
-            $result2 = $this->db->pquery("SELECT * FROM {$row['tablename']}
-                                         WHERE {$row['columnname']}='{$request->get('checkValue')}'");
-            $number2 = $this->db->num_rows($result2);
-            if ($number2>0){
-                for($j=0; $j<$number2; $j++) {
-                    $row = $this->db->query_result_rowdata($result2, $j);
-                    // first row is always the entity id
-                    $entityId = $row[0];
-                    // double check it's not a deleted
-                    $result3 = $this->db->pquery("SELECT * FROM `vtiger_crmentity` WHERE `crmid`=? AND deleted=0", array($entityId));
-                    $number3 = $this->db->num_rows($result3);
-                    if($number3>0){
-                        // result could be multiple ids
-                        $return[] = $entityId;
+            for($x=0; $x<$number2; $x++) {
+                $row = $this->db->query_result_rowdata($result, $x);
+                // check for duplicate values 
+                $result2 = $this->db->pquery("SELECT * FROM {$row['tablename']}
+                                             WHERE {$row['columnname']}='{$request->get('checkValue')}'");
+                $number2 = $this->db->num_rows($result2);
+                if ($number2>0){
+                    for($j=0; $j<$number2; $j++) {
+                        $row = $this->db->query_result_rowdata($result2, $j);
+                        // first row is always the entity id
+                        $entityId = $row[0];
+                        // double check it's not a deleted
+                        $result3 = $this->db->pquery("SELECT * FROM `vtiger_crmentity` WHERE `crmid`=? AND deleted=0", array($entityId));
+                        $number3 = $this->db->num_rows($result3);
+                        if($number3>0){
+                            // result could be multiple ids
+                            $return[] = $entityId;
+                        }
                     }
                 }
             }
