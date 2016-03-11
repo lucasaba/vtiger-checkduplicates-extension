@@ -33,7 +33,7 @@ class MSDuplicateCheck_MSDuplicateCheckAjax_Action extends Vtiger_Action_Control
 	 */
     public function getDuplicateCheckFields (Vtiger_Request $request){
         $module = $request->get("requestingModule");
-        $result = $this->db->pquery("select * FROM ms_duplicatecheck WHERE module='$module'");
+        $result = $this->db->pquery("SELECT * FROM ms_duplicatecheck WHERE module=?", array($module));
         $number = $this->db->num_rows($result);
         $return = array();
         for($j=0; $j<$number; $j++) {
@@ -60,7 +60,7 @@ class MSDuplicateCheck_MSDuplicateCheckAjax_Action extends Vtiger_Action_Control
         $number = $this->db->num_rows($result);
         $return = array();
         if($number > 0){
-            for($x=0; $x<$number2; $x++) {
+            for($x=0; $x<$number; $x++) {
                 $row = $this->db->query_result_rowdata($result, $x);
                 // check for duplicate values 
                 $result2 = $this->db->pquery("SELECT * FROM {$row['tablename']} WHERE {$row['columnname']} = ?",
@@ -85,6 +85,7 @@ class MSDuplicateCheck_MSDuplicateCheckAjax_Action extends Vtiger_Action_Control
         }
 
         // prepare response array
+        // TODO: extend return array to return enough information so that a link to the entity can be build or used
         $return = array("status" => "200", "content" => array("duplicate_ids" => $return), "msg" => vtranslate('JS_MSDUPLICATE_FOUND', 'MSDuplicateCheck'));
         $response = new Vtiger_Response();
         $response->setResult($return);
