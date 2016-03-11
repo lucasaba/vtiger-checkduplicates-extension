@@ -54,17 +54,18 @@ class MSDuplicateCheck_MSDuplicateCheckAjax_Action extends Vtiger_Action_Control
      */
     public function checkDuplicate(Vtiger_Request $request){
         // double check if field was defined as duplicate checking and get the internal definiton of the field
-        $result = $this->db->pquery("SELECT * FROM ms_duplicatecheck 
-                                     WHERE module='{$request->get('requestingModule')}'
-                                     AND field_htmlid='{$request->get('requestingField')}'");
+        $query = "SELECT * FROM `ms_duplicatecheck` WHERE module = ? AND field_htmlid = ?";
+        $params = array($request->get('requestingModule'), $request->get('requestingField'));
+        $result = $this->db->pquery($query, $params);
         $number = $this->db->num_rows($result);
         $return = array();
         if($number > 0){
             for($x=0; $x<$number2; $x++) {
                 $row = $this->db->query_result_rowdata($result, $x);
                 // check for duplicate values 
-                $result2 = $this->db->pquery("SELECT * FROM {$row['tablename']}
-                                             WHERE {$row['columnname']}='{$request->get('checkValue')}'");
+                $result2 = $this->db->pquery("SELECT * FROM {$row['tablename']} WHERE {$row['columnname']} = ?",
+                    array($request->get('checkValue'))
+                );
                 $number2 = $this->db->num_rows($result2);
                 if ($number2>0){
                     for($j=0; $j<$number2; $j++) {
